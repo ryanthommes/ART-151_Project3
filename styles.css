@@ -1,0 +1,39 @@
+body {
+    display: flex; 
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 100vh;
+    margin: 0;
+    padding: 5rem;
+}
+
+.row {
+    display: flex;
+}
+
+.col {
+    flex: 50%;
+    justify-content: center;
+}
+
+#image-input::file-selector-button {
+    background-color: #54544e;
+    color: white;
+    transition-duration: 0.4s;
+}
+
+#image-input::file-selector-button:hover {
+    background-color: grey;
+    color: black;
+}
+
+
+
+#image-display {
+    background : grey ;
+    border : 1px solid black ;
+    height : var( --box-side ) ;
+    object-fit : contain ;
+    width : var( --box-side ) ;
+}
+  
