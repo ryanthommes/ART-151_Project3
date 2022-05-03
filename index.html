@@ -9,21 +9,24 @@
     <link rel="stylesheet" type="text/css" href="./styles.css">
     <script type="text/javascript" src="./midi.js"></script>
     <script type="text/javascript" src="./script.js"></script>
+    <script type="text/javascript" src="./pixelit.js"></script>
 </head>
 
 <body>
-    <div class="row">
-        <div class="col">
-            <h1>Image to Pixelate</h1>
-            <input type="file" id="image-input" accept="image/jpg, image/jpeg, image/png" onclick="upload()">
-    
-            <br>
-    
-            <img id="image-display">
-        </div>
+    <div>
+        <h1>Image to Pixelate</h1>
+        <input type="file" id="image-input" accept="image/jpg, image/jpeg, image/png" onclick="upload()">
 
-        <div class="col" style="display:none">
-            <h1>Pixel Art</h1>
-        </div>
+        <br>
+
+        <img id="image-display" style="display: none">
+
+        <br>
+
+        <button id="convert-button" style="display:none" onclick="convert()">Pixelate!</button>
+
+        <br>
+
+        <canvas  id="pixelit-canvas"></canvas>
     </div>
 </body>
