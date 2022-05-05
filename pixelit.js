@@ -43,10 +43,7 @@
   
     /** hide from image */
     hideFromImg() {
-      this.drawfrom.style.visibility = "hidden";
-      this.drawfrom.style.position = "fixed";
-      this.drawfrom.style.top = 0;
-      this.drawfrom.style.left = 0;
+      this.drawfrom.style.display = "none";
       return this;
     }
   

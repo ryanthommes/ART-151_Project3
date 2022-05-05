@@ -1,10 +1,22 @@
 body {
+    background-color: black;
+    background: radial-gradient(circle at 50% -25%, #54544e 10%, #191917 30%, #000000 60%);
+    color: white;
     display: flex; 
     justify-content: center;
     flex-wrap: wrap;
     height: 100vh;
     margin: 0;
     padding: 5rem;
+}
+
+#wrapper {
+    text-align: center;
+    align-items: center;
+    margin-left: 10%;
+    margin-right: 10%;
+    color: white;
+    padding: 50px;
 }
 
 #image-input::file-selector-button {
@@ -14,6 +26,17 @@ body {
 }
 
 #image-input::file-selector-button:hover {
+    background-color: grey;
+    color: black;
+}
+
+button {
+    background-color: #54544e;
+    color: white;
+    transition-duration: 0.4s;
+}
+
+button:hover {
     background-color: grey;
     color: black;
 }

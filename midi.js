@@ -1,5 +1,5 @@
 nav = window.navigator;
-console.log(nav)
+console.log(nav);
 
 // list of key IDs from left to right, top to bottom
 keyID_list = [
@@ -11,12 +11,12 @@ keyID_list = [
     44, 45, 46, 47, 76, 77, 78, 79,
     40, 41, 42, 43, 72, 73, 74, 75,
     36, 37, 38, 39, 68, 69, 70, 71
-]
+];
 
 // 128 possible colors for launchpad
 // each decimal index represents the rgb color it would show
 color_map = [
-    [97,97,97], [179,179,179], [221,221,221], [255,255,255], [255, 179, 179], [255, 97, 97], [221, 97, 97], [179, 97, 97],
+    [179,179,179], [221,221,221], [255,255,255], [255, 179, 179], [255, 97, 97], [221, 97, 97], [179, 97, 97],
     [255, 243, 213], [255, 179, 97], [221, 140, 97], [179, 118, 97], [255, 238, 161], [255, 255, 97], [221, 221, 97], [179, 179, 97],
     [221, 255, 161], [194, 255, 97], [161, 221, 97], [194, 255, 179], [97, 255, 97], [97, 255, 97], [97, 221, 97], [97, 179, 97],
     [194, 255, 194], [97, 255, 140], [97, 221, 118], [97, 179, 107], [194, 255, 204], [97, 255, 204], [97, 221, 161], [97, 221, 161],
@@ -32,8 +32,12 @@ color_map = [
     [129, 140, 204], [204, 170, 129], [221, 97, 97], [249, 179, 161], [249, 186, 118], [255, 243, 140], [233, 249, 161], [213, 238, 118],
     [129, 129, 161], [249, 249, 213], [221, 252, 228], [233, 233, 255], [228, 213, 255], [179, 179, 179], [213, 213, 213], [249, 255, 255],
     [233, 97, 97], [170, 97, 97], [129, 246, 97], [97, 179, 97], [243, 238, 97], [179, 161, 97], [238, 194, 97], [194, 118, 97]
-]
+];
 
+
+/**
+ * Setup midi
+ */
 if (nav.requestMIDIAccess) {
     nav.requestMIDIAccess().then(success);
 } else {
@@ -83,23 +87,64 @@ function success(midiAccess) {
  */
  function handleInput(input) {
     const command = input.data[0];
-    const key = input.data[1];
+    const keyID = input.data[1];
     const velocity = input.data[2];
 
-    console.log(`command: ${command}, keyID: ${key}, type: ${velocity}`)
+    console.log(`command: ${command}, keyID: ${keyID}, type: ${velocity}`);
+
+    switch (command) {
+        case 144:
+            if (velocity != 0) {
+                colorKeys(keyID, 0);
+            }
+            break;
+    }
 }
 
-function colorKeys(key, color) {
-    device && device.send([0x90, key, color]);
+
+/**
+ * Listens for events
+ * @param {number} key ID of key to color
+ * @param {number} color 1 of 128 possible colors
+ */
+function colorKeys(keyID, color) {
+    device && device.send([0x90, keyID, color]);
 }
 
+
+/**
+ * Draws color array to launchpad matrix
+ * @param {array} colorArray array of colors to draw
+ */
 function drawMatrix(colorArray) {
     var i = 0;
+    console.log(colorArray);
+
     keyID_list.forEach(id => {
         try {
 
             // assigns color value to MIDI key that was pressed
             colorKeys(id, colorArray[i]);
+            i++;
+
+        } catch {
+
+            console.log("No MIDI found, no keys to color...");
+
+        }
+    })
+}
+
+
+/**
+ * Clears launchpad matrix
+ */
+function clearMatrix() {
+    keyID_list.forEach(id => {
+        try {
+
+            // assigns color value to MIDI key that was pressed
+            colorKeys(id, 0);
             i++;
 
         } catch {
